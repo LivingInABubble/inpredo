@@ -16,14 +16,14 @@ def graphwerk(start, finish):
     for x in range(start, finish):
         # Below filtering is valid for eurusd.csv file. Other financial data files have different orders
         # so you need to find out what means open, high and closed in their respective order.
-        opened.append(float(pd[x][1]))
-        high.append(float(pd[x][2]))
-        low.append(float(pd[x][3]))
-        closed.append(float(pd[x][4]))
-        volume.append(float(pd[x][5]))
-        date.append(pd[x][0])
+        opened.append(float(pd[x][3]))
+        high.append(float(pd[x][4]))
+        low.append(float(pd[x][5]))
+        closed.append(float(pd[x][6]))
+        volume.append(float(pd[x][7]))
+        date.append(pd[x][1])
 
-    close_next = float(pd[finish][4])
+    close_next = float(pd[finish][6])
 
     sma = convolve_sma(closed, 5)
     smb = list(sma)
@@ -57,11 +57,6 @@ def graphwerk(start, finish):
         plt.savefig(buy_dir + str(uuid.uuid4()) + '.jpg', bbox_inches='tight')
 
     # plt.show()
-    opened.clear()
-    closed.clear()
-    volume.clear()
-    high.clear()
-    low.clear()
     plt.cla()
     plt.clf()
 
@@ -76,7 +71,7 @@ if __name__ == '__main__':
         os.makedirs(sell_dir)
 
     # Input your csv file here with historical data
-    ad = np.genfromtxt('../financial_data/eurusd.csv', delimiter=',', dtype=str)
+    ad = np.genfromtxt('../financial_data/gemini_BTCUSD_1hr.csv', delimiter=',', dtype=str)
     pd = np.flipud(ad)
 
     for i in tqdm(range(int(len(pd) / 2) - 6)):
