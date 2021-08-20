@@ -1,4 +1,3 @@
-import os
 from glob import glob
 
 import numpy as np
@@ -7,14 +6,11 @@ from keras.preprocessing.image import load_img, img_to_array
 from tqdm import tqdm
 
 
-def predict(file):
+def predict(model, file):
     img_width, img_height = 150, 150
     x = load_img(file, target_size=(img_width, img_height))
     x = np.expand_dims(img_to_array(x), axis=0)
 
-    # os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
-    # weights_path = '../src/models/weights'
-    model = load_model('../src/models/model.h5')
     array = model.predict(x)
     result = array[0]
     if result[0] > result[1]:
@@ -43,9 +39,13 @@ def predict(file):
 def main():
     tb, ts, fb, fs, na = 0, 0, 0, 0, 0
 
+    # os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
+    # weights_path = '../src/models/weights'
+    model = load_model('../src/models/model.h5')
+
     print("Label: buy")
     for filepath in tqdm(glob('../data/test/buy/*')):
-        result = predict(filepath)
+        result = predict(model, filepath)
         if result == "buy":
             tb += 1
         elif result == 'n/a':
@@ -56,7 +56,7 @@ def main():
 
     print("Label: sell")
     for filepath in tqdm(glob('../data/test/sell/*')):
-        result = predict(filepath)
+        result = predict(model, filepath)
         if result == "sell":
             ts += 1
         elif result == 'n/a':
