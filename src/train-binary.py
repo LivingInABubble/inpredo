@@ -94,8 +94,6 @@ def main():
     target_dir = './models/'
     if not os.path.exists(target_dir):
         os.mkdir(target_dir)
-    model.save('../src/models/model.h5')
-    model.save_weights('../src/models/weights.h5')
 
     checkpoint = ModelCheckpoint(target_dir, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     callbacks_list = [checkpoint]
@@ -108,6 +106,9 @@ def main():
         validation_data=validation_generator,
         callbacks=callbacks_list,
         validation_steps=nb_validation_samples // batch_size)
+
+    model.save('../src/models/model.h5')
+    model.save_weights('../src/models/weights.h5')
 
 
 if __name__ == '__main__':
