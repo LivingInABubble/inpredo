@@ -1,5 +1,4 @@
 import os
-import uuid
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -43,18 +42,19 @@ def graphwerk(start, finish):
     # comp_ratio = close_next / closed[-1]
     # print(comp_ratio)
 
+    filename = f'{date[0]} ~ {date[-1]}.jpg'.replace(':00:00', '')
     if closed[-1] > close_next:
         # print('close value is bigger')
         # print('last value: ' + str(closed[-1]))
         # print('next value: ' + str(close_next))
         # print('sell')
-        plt.savefig(sell_dir + str(uuid.uuid4()) + '.jpg', bbox_inches='tight')
+        plt.savefig(sell_dir + filename, bbox_inches='tight')
     else:
         # print('close value is smaller')
         # print('last value: ' + str(closed[-1]))
         # print('next value: ' + str(close_next))
         # print('buy')
-        plt.savefig(buy_dir + str(uuid.uuid4()) + '.jpg', bbox_inches='tight')
+        plt.savefig(buy_dir + filename, bbox_inches='tight')
 
     # plt.show()
     plt.close()
