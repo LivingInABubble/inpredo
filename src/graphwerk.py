@@ -57,8 +57,7 @@ def graphwerk(start, finish):
         plt.savefig(buy_dir + str(uuid.uuid4()) + '.jpg', bbox_inches='tight')
 
     # plt.show()
-    plt.cla()
-    plt.clf()
+    plt.close()
 
 
 if __name__ == '__main__':
