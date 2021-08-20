@@ -61,11 +61,11 @@ def graphwerk(start, finish):
 
 
 if __name__ == '__main__':
-    buy_dir = '../data/train/buy/'
+    buy_dir = '../data/buy/'
     if not os.path.exists(buy_dir):
         os.makedirs(buy_dir)
 
-    sell_dir = '../data/train/sell/'
+    sell_dir = '../data/sell/'
     if not os.path.exists(sell_dir):
         os.makedirs(sell_dir)
 

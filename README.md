@@ -21,7 +21,7 @@ After running `graphwerk.py` it will take some time to write single jpg files un
 When script is done writing, then you need to take randomly roughly 20 percent of the training data and put it into validation data.
 You need this to be able to train a neural network and yes, I was too lazy to automate that as well.
 
-`splitfolders --ratio .8 .1 .1 -- data/train`
+`splitfolders --ratio .8 .1 .1 -- data`
 
 ## Second Step - Train the AI!
 
