@@ -1,8 +1,10 @@
 import os
+from glob import glob
 
 import numpy as np
 from keras.models import load_model
 from keras.preprocessing.image import load_img, img_to_array
+from tqdm import tqdm
 
 
 def predict(file):
@@ -17,23 +19,23 @@ def predict(file):
     result = array[0]
     if result[0] > result[1]:
         if result[0] > 0.9:
-            print("Predicted answer: Buy")
+            # print("Predicted answer: Buy")
             answer = 'buy'
-            print(result)
-            print(array)
+            # print(result)
+            # print(array)
         else:
-            print("Predicted answer: Not confident")
+            # print("Predicted answer: Not confident")
             answer = 'n/a'
-            print(result)
+            # print(result)
     else:
         if result[1] > 0.9:
-            print("Predicted answer: Sell")
+            # print("Predicted answer: Sell")
             answer = 'sell'
-            print(result)
+            # print(result)
         else:
-            print("Predicted answer: Not confident")
+            # print("Predicted answer: Not confident")
             answer = 'n/a'
-            print(result)
+            # print(result)
 
     return answer
 
@@ -41,33 +43,27 @@ def predict(file):
 def main():
     tb, ts, fb, fs, na = 0, 0, 0, 0, 0
 
-    for ret in os.walk('data/test/buy'):
-        for filename in ret[2]:
-            if filename.startswith("."):
-                continue
-            print("Label: buy")
-            result = predict(ret[0] + '/' + filename)
-            if result == "buy":
-                tb += 1
-            elif result == 'n/a':
-                print('no action')
-                na += 1
-            else:
-                fb += 1
+    print("Label: buy")
+    for filepath in tqdm(glob('../data/test/buy/*')):
+        result = predict(filepath)
+        if result == "buy":
+            tb += 1
+        elif result == 'n/a':
+            # print('no action')
+            na += 1
+        else:
+            fb += 1
 
-    for ret in os.walk('data/test/sell'):
-        for filename in ret[2]:
-            if filename.startswith("."):
-                continue
-            print("Label: sell")
-            result = predict(ret[0] + '/' + filename)
-            if result == "sell":
-                ts += 1
-            elif result == 'n/a':
-                print('no action')
-                na += 1
-            else:
-                fs += 1
+    print("Label: sell")
+    for filepath in tqdm(glob('../data/test/sell/*')):
+        result = predict(filepath)
+        if result == "sell":
+            ts += 1
+        elif result == 'n/a':
+            # print('no action')
+            na += 1
+        else:
+            fs += 1
 
     """
     Check metrics
@@ -85,3 +81,7 @@ def main():
 
     f_measure = (2 * recall * precision) / (recall + precision)
     print("F-measure: ", f_measure)
+
+
+if __name__ == '__main__':
+    main()
