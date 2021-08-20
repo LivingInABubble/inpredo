@@ -44,7 +44,7 @@ def main():
     model = load_model('../src/models/model.h5')
 
     print("Label: buy")
-    for filepath in tqdm(glob('../data/test/buy/*')):
+    for filepath in tqdm(glob('../output/test/buy/*')):
         result = predict(model, filepath)
         if result == "buy":
             tb += 1
@@ -55,7 +55,7 @@ def main():
             fb += 1
 
     print("Label: sell")
-    for filepath in tqdm(glob('../data/test/sell/*')):
+    for filepath in tqdm(glob('../output/test/sell/*')):
         result = predict(model, filepath)
         if result == "sell":
             ts += 1

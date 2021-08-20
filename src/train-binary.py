@@ -23,8 +23,8 @@ def main():
     else:
         epochs = 1000
 
-    train_data_dir = '../data/train/'
-    validation_data_dir = '../data/val/'
+    train_data_dir = '../output/train/'
+    validation_data_dir = '../output/val/'
 
     # Input the size of your sample images
     img_width, img_height = 150, 150
