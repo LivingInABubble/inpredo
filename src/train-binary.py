@@ -90,25 +90,22 @@ def main():
     """
     Tensorboard log
     """
-    # target_dir = f"./models/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
     target_dir = './models/'
     if not os.path.exists(target_dir):
         os.mkdir(target_dir)
+    # model.save('../src/models/model.h5')
+    # model.save_weights('../src/models/weights.h5')
 
-    checkpoint = ModelCheckpoint(target_dir, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    callbacks_list = [checkpoint]
-
+    checkpoint = ModelCheckpoint(target_dir + '{epoch:02d}-{val_accuracy:.2f}.hdf5',
+                                 monitor='val_accuracy', verbose=2, save_best_only=True, mode='max')
     model.fit_generator(
         train_generator,
         steps_per_epoch=nb_train_samples // batch_size,
         epochs=epochs,
         shuffle=True,
         validation_data=validation_generator,
-        callbacks=callbacks_list,
+        callbacks=[checkpoint],
         validation_steps=nb_validation_samples // batch_size)
-
-    model.save('../src/models/model.h5')
-    model.save_weights('../src/models/weights.h5')
 
 
 if __name__ == '__main__':
